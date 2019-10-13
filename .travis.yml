@@ -1,7 +1,5 @@
 env:
-  global:
-    - APP_ENV=testing
-    - CC_TEST_REPORTER_ID=06bfdffbb28c39bc8e145da160cf166f44e79b04e8c11b927b50dee55360189c
+  - APP_ENV=testing
 
 language: php
 php:
