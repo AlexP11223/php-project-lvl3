@@ -1,0 +1,28 @@
+version: "2"
+checks:
+  similar-code:
+    enabled: true
+plugins:
+  phpcodesniffer:
+    enabled: true
+    config:
+      file_extensions: "php"
+      ignore_warnings: true
+      standard: "./phpcs.xml"
+  sonar-php:
+    enabled: true
+    tests_patterns:
+      - tests/**
+  phpmd:
+    enabled: true
+    config:
+      file_extensions:
+        - php
+    checks:
+      CleanCode/StaticAccess:
+        enabled: false
+exclude_patterns:
+  - "database/"
+  - "config/"
+  - "tests/"
+  - "**/vendor/"
