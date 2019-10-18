@@ -15,11 +15,11 @@ use Illuminate\Support\Facades\Validator;
 |
 */
 
-$router->get('/', function () {
+$router->get('/', ['as' => 'home', function () {
     return view('home');
-});
+}]);
 
-$router->post('/domains', function (Request $request) {
+$router->post('/domains', ['as' => 'domains.store', function (Request $request) {
     $domainExtractionRegex = '/(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z0-9][a-z0-9-]{0,61}[a-z0-9]/';
 
     $validator = Validator::make($request->all(), [
@@ -27,7 +27,7 @@ $router->post('/domains', function (Request $request) {
     ]);
 
     if ($validator->fails()) {
-        return redirect('');
+        return redirect()->route('home');
     }
 
     preg_match($domainExtractionRegex, $request->get('domain'), $matches);
@@ -37,10 +37,10 @@ $router->post('/domains', function (Request $request) {
         ['name' => $domain]
     );
 
-    return redirect()->route('domain', ['id' => $id]);
-});
+    return redirect()->route('domains.show', ['id' => $id]);
+}]);
 
-$router->get('/domains/{id}', ['as' => 'domain', function ($id) {
+$router->get('/domains/{id}', ['as' => 'domains.show', function ($id) {
     $domain = DB::table('domains')->find($id);
 
     if (!$domain) {
