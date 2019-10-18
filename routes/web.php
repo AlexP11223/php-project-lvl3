@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Validator;
 */
 
 $router->get('/', ['as' => 'home', function () {
-    return view('home');
+    return view('domains.create');
 }]);
 
 $router->post('/domains', ['as' => 'domains.store', function (Request $request) {
@@ -47,5 +47,5 @@ $router->get('/domains/{id}', ['as' => 'domains.show', function ($id) {
         abort(404);
     }
 
-    return view('domain', ['domain' => $domain]);
+    return view('domains.show', ['domain' => $domain]);
 }]);
