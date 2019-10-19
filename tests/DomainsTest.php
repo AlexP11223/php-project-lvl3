@@ -2,6 +2,7 @@
 
 namespace Tests;
 
+use App\Domain;
 use Laravel\Lumen\Testing\DatabaseMigrations;
 use Laravel\Lumen\Testing\DatabaseTransactions;
 
@@ -46,5 +47,13 @@ class DomainsTest extends TestCase
             ['google', null],
             ['.com', null],
         ];
+    }
+
+    public function testIndex()
+    {
+        factory(Domain::class, 10)->create();
+
+        $this->get(route('domains.index'));
+        $this->assertResponseOk();
     }
 }
