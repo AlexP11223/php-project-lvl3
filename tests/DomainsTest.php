@@ -10,19 +10,19 @@ class DomainsTest extends TestCase
     /**
      * @dataProvider domainProvider
      */
-    public function testInsert($input, $result)
+    public function testStore($input, $result)
     {
-        $this->post('/domains', ['domain' => $input]);
+        $this->post(route('domains.store'), ['domain' => $input]);
 
         if ($result) {
             $this->seeInDatabase('domains', ['name' => $result]);
 
-            $this->get('domains/1');
+            $this->get(route('domains.show', ['id' => 1]));
             $this->assertResponseOk();
         } else {
             $this->notSeeInDatabase('domains', ['name' => $result]);
 
-            $this->get('domains/1');
+            $this->get(route('domains.show', ['id' => 1]));
             $this->assertResponseStatus(404);
         }
     }
