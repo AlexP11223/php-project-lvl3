@@ -13,7 +13,7 @@ class DomainsTest extends TestCase
      */
     public function testStore($input, $result)
     {
-        $this->post(route('domains.store'), ['domain' => $input]);
+        $this->post(route('domains.store'), ['url' => $input]);
 
         if ($result) {
             $this->seeInDatabase('domains', ['name' => $result]);
@@ -31,16 +31,13 @@ class DomainsTest extends TestCase
     public function domainProvider()
     {
         return [
-            ['google.com', 'google.com'],
-            ['http://google.com', 'google.com'],
-            ['https://google.com', 'google.com'],
-            ['https://google.com/', 'google.com'],
-            ['https://google.com/?q=hello', 'google.com'],
-            ['https://google.com/?q=hello&foo=google.ru', 'google.com'],
-            ['https://www.google.com', 'www.google.com'],
-            ['google.co.uk', 'google.co.uk'],
-            ['sub.google.com', 'sub.google.com'],
-            ['xn--90adear.xn--p1ai/', 'xn--90adear.xn--p1ai'],
+            ['http://google.com', 'http://google.com'],
+            ['https://google.com/', 'https://google.com/'],
+            ['https://google.com/?q=hello', 'https://google.com/?q=hello'],
+            ['https://www.google.com', 'https://www.google.com'],
+//            ['google.com', 'google.com'],
+//            ['sub.google.co.uk', 'sub.google.co.uk'],
+//            ['xn--90adear.xn--p1ai', 'xn--90adear.xn--p1ai'],
             ['', null],
             ['g', null],
             ['https://', null],
