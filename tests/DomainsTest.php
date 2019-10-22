@@ -35,14 +35,13 @@ class DomainsTest extends TestCase
             ['https://google.com/', 'https://google.com/'],
             ['https://google.com/?q=hello', 'https://google.com/?q=hello'],
             ['https://www.google.com', 'https://www.google.com'],
-//            ['google.com', 'google.com'],
-//            ['sub.google.co.uk', 'sub.google.co.uk'],
-//            ['xn--90adear.xn--p1ai', 'xn--90adear.xn--p1ai'],
+            ['google.com', 'google.com'],
+            ['sub.google.co.uk', 'sub.google.co.uk'],
+            ['xn--90adear.xn--p1ai', 'xn--90adear.xn--p1ai'],
+            ['8.8.8.8:8080', '8.8.8.8:8080'],
             ['', null],
             ['g', null],
             ['https://', null],
-            ['google', null],
-            ['.com', null],
         ];
     }
 

@@ -37,7 +37,11 @@ class DomainsController extends Controller
 
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
+        $input = $request->all();
+        if (isset($input['url']) && strpos($input['url'], 'http') !== 0) {
+            $input['url'] = "http://${input['url']}"; // for url validation rule
+        }
+        $validator = Validator::make($input, [
             'url' => "required|max:255|url"
         ]);
         if ($validator->fails()) {
