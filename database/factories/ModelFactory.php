@@ -11,8 +11,8 @@
 |
 */
 
-$factory->define(App\Domain::class, function (Faker\Generator $faker) {
+$factory->define(App\Url::class, function (Faker\Generator $faker) {
     return [
-        'name' => $faker->url,
+        'address' => $faker->url,
     ];
 });

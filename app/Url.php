@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Domain extends Model
+class Url extends Model
 {
     /**
      * The attributes that are mass assignable.
@@ -12,6 +12,6 @@ class Domain extends Model
      * @var array
      */
     protected $fillable = [
-        'name'
+        'address'
     ];
 }

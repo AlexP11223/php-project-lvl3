@@ -11,7 +11,7 @@
 |
 */
 
-$router->get('/', ['as' => 'domains.create', 'uses' => 'DomainsController@create']);
-$router->post('/domains', ['as' => 'domains.store', 'uses' => 'DomainsController@store']);
-$router->get('/domains/{id}', ['as' => 'domains.show', 'uses' => 'DomainsController@show']);
-$router->get('/domains', ['as' => 'domains.index', 'uses' => 'DomainsController@index']);
+$router->get('/', ['as' => 'urls.create', 'uses' => 'UrlsController@create']);
+$router->post('/urls', ['as' => 'urls.store', 'uses' => 'UrlsController@store']);
+$router->get('/urls/{id}', ['as' => 'urls.show', 'uses' => 'UrlsController@show']);
+$router->get('/urls', ['as' => 'urls.index', 'uses' => 'UrlsController@index']);

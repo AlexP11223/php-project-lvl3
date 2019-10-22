@@ -3,27 +3,26 @@
 namespace Tests;
 
 use App\Domain;
-use Laravel\Lumen\Testing\DatabaseMigrations;
-use Laravel\Lumen\Testing\DatabaseTransactions;
+use App\Url;
 
-class DomainsTest extends TestCase
+class UrlsTest extends TestCase
 {
     /**
      * @dataProvider domainProvider
      */
     public function testStore($input, $result)
     {
-        $this->post(route('domains.store'), ['url' => $input]);
+        $this->post(route('urls.store'), ['url' => $input]);
 
         if ($result) {
-            $this->seeInDatabase('domains', ['name' => $result]);
+            $this->seeInDatabase('urls', ['address' => $result]);
 
-            $this->get(route('domains.show', ['id' => 1]));
+            $this->get(route('urls.show', ['id' => 1]));
             $this->assertResponseOk();
         } else {
-            $this->notSeeInDatabase('domains', ['name' => $result]);
+            $this->notSeeInDatabase('urls', ['address' => $result]);
 
-            $this->get(route('domains.show', ['id' => 1]));
+            $this->get(route('urls.show', ['id' => 1]));
             $this->assertResponseStatus(404);
         }
     }
@@ -47,9 +46,9 @@ class DomainsTest extends TestCase
 
     public function testIndex()
     {
-        factory(Domain::class, 10)->create();
+        factory(Url::class, 10)->create();
 
-        $this->get(route('domains.index'));
+        $this->get(route('urls.index'));
         $this->assertResponseOk();
     }
 }

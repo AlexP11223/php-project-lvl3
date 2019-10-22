@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
-class DomainsController extends Controller
+class UrlsController extends Controller
 {
     public function __construct()
     {
@@ -14,25 +14,25 @@ class DomainsController extends Controller
 
     public function show($id)
     {
-        $domain = DB::table('domains')->find($id);
+        $domain = DB::table('urls')->find($id);
 
         if (!$domain) {
             abort(404);
         }
 
-        return view('domains.show', ['domain' => $domain]);
+        return view('urls.show', ['url' => $domain]);
     }
 
     public function index()
     {
-        $domains = DB::table('domains')->paginate();
+        $urls = DB::table('urls')->paginate();
 
-        return view('domains.index', ['domains' => $domains]);
+        return view('urls.index', ['urls' => $urls]);
     }
 
     public function create()
     {
-        return view('domains.create');
+        return view('urls.create');
     }
 
     public function store(Request $request)
@@ -45,15 +45,15 @@ class DomainsController extends Controller
             'url' => "required|max:255|url"
         ]);
         if ($validator->fails()) {
-            return redirect()->route('domains.create');
+            return redirect()->route('urls.create');
         }
 
         $url = $request->get('url');
 
-        $id = DB::table('domains')->insertGetId(
-            ['name' => $url]
+        $id = DB::table('urls')->insertGetId(
+            ['address' => $url]
         );
 
-        return redirect()->route('domains.show', ['id' => $id]);
+        return redirect()->route('urls.show', ['id' => $id]);
     }
 }

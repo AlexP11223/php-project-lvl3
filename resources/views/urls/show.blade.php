@@ -1,6 +1,6 @@
 @extends('layouts.page')
 
 @section('content')
-    {{ $domain->name }}
+    {{ $url->address }}
 @endsection
 
