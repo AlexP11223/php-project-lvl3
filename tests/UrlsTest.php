@@ -51,6 +51,7 @@ class UrlsTest extends TestCase
             ['sub.google.co.uk', 'sub.google.co.uk'],
             ['xn--90adear.xn--p1ai', 'xn--90adear.xn--p1ai'],
             ['8.8.8.8:8080', '8.8.8.8:8080'],
+            ['        http://google.com ', 'http://google.com'],
             ['', null],
             ['g', null],
             ['https://', null],
