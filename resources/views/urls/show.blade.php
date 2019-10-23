@@ -1,7 +1,7 @@
 @extends('layouts.page')
 
 @section('content')
-    <h3>{{ $url->address }}</h3>
+    <h3>{{ $url->address }} ({{ $url->created_at }})</h3>
 
     <table class="table table-bordered">
         <tr>

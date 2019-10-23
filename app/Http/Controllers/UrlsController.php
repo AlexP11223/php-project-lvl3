@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Analysis\Analyzer;
 use App\Url;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class UrlsController extends Controller
@@ -27,7 +26,7 @@ class UrlsController extends Controller
 
     public function index()
     {
-        $urls = Url::paginate();
+        $urls = Url::orderBy('created_at', 'desc')->paginate();
 
         return view('urls.index', ['urls' => $urls]);
     }

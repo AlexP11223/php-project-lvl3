@@ -3,7 +3,7 @@
 @section('content')
     <ul>
         @foreach($urls as $url)
-            <li><a href="{{ route('urls.show', ['id' => $url->id]) }}">{{ $url->address }}</a></li>
+            <li><a href="{{ route('urls.show', ['id' => $url->id]) }}">{{ $url->address }} ({{ $url->created_at }})</a></li>
         @endforeach
     </ul>
 
