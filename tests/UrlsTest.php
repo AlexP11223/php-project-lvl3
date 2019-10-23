@@ -2,25 +2,37 @@
 
 namespace Tests;
 
-use App\Domain;
 use App\Url;
+use BlastCloud\Guzzler\UsesGuzzler;
+use GuzzleHttp\Client;
+use GuzzleHttp\Psr7\Response;
 
 class UrlsTest extends TestCase
 {
+    use UsesGuzzler;
+
     /**
-     * @dataProvider domainProvider
+     * @dataProvider urlProvider
      */
-    public function testStore($input, $result)
+    public function testStore($input, $resultUrl)
     {
+        $this->app->instance(Client::class, $this->guzzler->getClient());
+        $this->guzzler->queueResponse(new Response(200, ['content-length' => 6], 'hello!'));
+
         $this->post(route('urls.store'), ['url' => $input]);
 
-        if ($result) {
-            $this->seeInDatabase('urls', ['address' => $result]);
+        if ($resultUrl) {
+            $this->seeInDatabase('urls', [
+                'address' => $resultUrl,
+                'statusCode' => 200,
+                'body' => 'hello!',
+                'contentLength' => 6
+            ]);
 
             $this->get(route('urls.show', ['id' => 1]));
             $this->assertResponseOk();
         } else {
-            $this->notSeeInDatabase('urls', ['address' => $result]);
+            $this->notSeeInDatabase('urls', ['address' => $resultUrl]);
 
             $this->withExceptionHandling();
             $this->get(route('urls.show', ['id' => 1]));
@@ -28,7 +40,7 @@ class UrlsTest extends TestCase
         }
     }
 
-    public function domainProvider()
+    public function urlProvider()
     {
         return [
             ['http://google.com', 'http://google.com'],

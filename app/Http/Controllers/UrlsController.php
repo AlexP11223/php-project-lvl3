@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Analysis\Analyzer;
 use App\Url;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -50,6 +51,10 @@ class UrlsController extends Controller
         }
 
         $url = Url::create(['address' => $request->get('url')]);
+
+        $analyzer = new Analyzer($url->address);
+        $results = $analyzer->getResults();
+        $url->update($results);
 
         return redirect()->route('urls.show', ['id' => $url->id]);
     }

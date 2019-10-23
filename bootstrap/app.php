@@ -46,6 +46,11 @@ $app->singleton(
     App\Console\Kernel::class
 );
 
+$app->bind(
+    GuzzleHttp\Client::class,
+    GuzzleHttp\Client::class
+);
+
 /*
 |--------------------------------------------------------------------------
 | Register Middleware

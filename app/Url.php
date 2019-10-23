@@ -12,6 +12,9 @@ class Url extends Model
      * @var array
      */
     protected $fillable = [
-        'address'
+        'address',
+        'statusCode',
+        'contentLength',
+        'body',
     ];
 }
