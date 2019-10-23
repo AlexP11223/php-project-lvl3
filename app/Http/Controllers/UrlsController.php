@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Url;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -14,7 +15,7 @@ class UrlsController extends Controller
 
     public function show($id)
     {
-        $domain = DB::table('urls')->find($id);
+        $domain = Url::find($id);
 
         if (!$domain) {
             abort(404);
@@ -25,7 +26,7 @@ class UrlsController extends Controller
 
     public function index()
     {
-        $urls = DB::table('urls')->paginate();
+        $urls = Url::paginate();
 
         return view('urls.index', ['urls' => $urls]);
     }
@@ -48,12 +49,8 @@ class UrlsController extends Controller
             return redirect()->route('urls.create');
         }
 
-        $url = $request->get('url');
+        $url = Url::create(['address' => $request->get('url')]);
 
-        $id = DB::table('urls')->insertGetId(
-            ['address' => $url]
-        );
-
-        return redirect()->route('urls.show', ['id' => $id]);
+        return redirect()->route('urls.show', ['id' => $url->id]);
     }
 }
