@@ -22,6 +22,7 @@ class UrlsTest extends TestCase
         } else {
             $this->notSeeInDatabase('urls', ['address' => $result]);
 
+            $this->withExceptionHandling();
             $this->get(route('urls.show', ['id' => 1]));
             $this->assertResponseStatus(404);
         }
