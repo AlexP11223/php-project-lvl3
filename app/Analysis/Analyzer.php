@@ -24,7 +24,13 @@ class Analyzer
 
     public function getResults()
     {
-        $response = $this->httpClient->get($this->url);
+        $response = $this->httpClient->get(
+            $this->url,
+            [
+                'timeout' => 30,
+                'connect_timeout' => 30,
+            ]
+        );
 
         return [
             'statusCode' => $response->getStatusCode(),
