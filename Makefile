@@ -22,5 +22,11 @@ test:
 run:
 	php -S localhost:8000 -t public
 
+queue-daemon:
+	php artisan queue:work
+
+empty-queue:
+	php artisan queue:work --stop-when-empty
+
 logs:
-	tail -f `ls -t storage/logs/lumen* | head -1`
+	tail -n 100 -f `ls -t storage/logs/lumen* | head -1`

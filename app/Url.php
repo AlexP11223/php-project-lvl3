@@ -6,6 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Url extends Model
 {
+    public const WAITING = 'waiting';
+    public const PROCESSING = 'processing';
+    public const SUCCEEDED = 'succeeded';
+    public const FAILED = 'failed';
+
     /**
      * The attributes that are mass assignable.
      *
@@ -29,5 +34,11 @@ class Url extends Model
     public function normalizedAddress()
     {
         return self::ensureHttp($this->address);
+    }
+
+    public function setState($state)
+    {
+        $this->state = $state;
+        $this->save();
     }
 }

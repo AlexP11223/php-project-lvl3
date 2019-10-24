@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Analysis\Analyzer;
+use App\Jobs\AnalysisJob;
 use App\Url;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -50,10 +50,9 @@ class UrlsController extends Controller
         }
 
         $url = Url::create(['address' => $request->get('url')]);
+        $url->setState(Url::WAITING);
 
-        $analyzer = new Analyzer($url->address);
-        $results = $analyzer->getResults();
-        $url->update($results);
+        dispatch(new AnalysisJob($url));
 
         return redirect()->route('urls.show', ['id' => $url->id]);
     }

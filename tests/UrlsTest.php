@@ -2,6 +2,7 @@
 
 namespace Tests;
 
+use App\Jobs\AnalysisJob;
 use App\Url;
 use BlastCloud\Guzzler\UsesGuzzler;
 use GuzzleHttp\Client;
@@ -19,14 +20,16 @@ class UrlsTest extends TestCase
         $this->app->instance(Client::class, $this->guzzler->getClient());
         $this->guzzler->queueResponse(new Response(200, ['content-length' => 6], 'hello!'));
 
+        if ($resultUrl) {
+            $this->expectsJobs(AnalysisJob::class);
+        }
+        
         $this->post(route('urls.store'), ['url' => $input]);
 
         if ($resultUrl) {
             $this->seeInDatabase('urls', [
                 'address' => $resultUrl,
-                'statusCode' => 200,
-                'body' => 'hello!',
-                'contentLength' => 6
+                'state' => Url::WAITING
             ]);
 
             $this->get(route('urls.show', ['id' => 1]));
