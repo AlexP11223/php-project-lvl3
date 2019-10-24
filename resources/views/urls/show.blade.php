@@ -6,7 +6,10 @@
     @switch ($url->state)
         @case (\App\Url::WAITING)
         @case (\App\Url::PROCESSING)
-            <span>Loading...</span>
+            <span>Processing...</span>
+            <div>
+                <img src="{{ url('img/loading.gif') }}" alt="loading indicator" style="margin-left: -50px"/>
+            </div>
             @break
         @case (\App\Url::FAILED)
             <span class="error">Failed.</span>
