@@ -17,4 +17,17 @@ class Url extends Model
         'contentLength',
         'body',
     ];
+
+    public static function ensureHttp(string $address)
+    {
+        if (stripos($address, 'http://') !== 0 && strpos($address, 'https://') !== 0) {
+            return "http://$address";
+        }
+        return $address;
+    }
+
+    public function normalizedAddress()
+    {
+        return self::ensureHttp($this->address);
+    }
 }

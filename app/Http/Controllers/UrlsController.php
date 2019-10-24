@@ -39,8 +39,8 @@ class UrlsController extends Controller
     public function store(Request $request)
     {
         $input = $request->all();
-        if (isset($input['url']) && strpos($input['url'], 'http') !== 0) {
-            $input['url'] = "http://${input['url']}"; // for url validation rule
+        if (isset($input['url'])) {
+            $input['url'] = Url::ensureHttp($input['url']); // for url validation rule
         }
         $validator = Validator::make($input, [
             'url' => "required|max:255|url"

@@ -1,11 +1,11 @@
 @extends('layouts.page')
 
 @section('content')
-    <h3>{{ $url->address }} ({{ $url->created_at }})</h3>
+    <h3><a href="{{ $url->normalizedAddress() }}" rel="nofollow" target="_blank">{{ $url->address }}</a> ({{ $url->created_at }})</h3>
 
-    <table class="table table-bordered">
+    <table class="table url-info-table">
         <tr>
-            <th style="width: 30%" scope="row">Status</th>
+            <th scope="row">Status</th>
             <td>{{ $url->statusCode }}</td>
         </tr>
         <tr>
