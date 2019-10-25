@@ -27,8 +27,8 @@ class Analyzer
         $response = $this->httpClient->get(
             $this->url,
             [
-                'timeout' => 30,
-                'connect_timeout' => 30,
+                'timeout' => 20,
+                'connect_timeout' => 15,
             ]
         );
 
