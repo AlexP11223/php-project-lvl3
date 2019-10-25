@@ -6,3 +6,7 @@
 .url-info-table tr th {
     width: 200px;
 }
+
+.url-list li {
+    padding-bottom: 10px;
+}
