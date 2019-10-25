@@ -13,15 +13,19 @@ class UrlsController extends Controller
     {
     }
 
-    public function show($id)
+    public function show($id, Request $request)
     {
-        $domain = Url::find($id);
+        $url = Url::find($id);
 
-        if (!$domain) {
+        if (!$url) {
             abort(404);
         }
 
-        return view('urls.show', ['url' => $domain]);
+        if ($request->expectsJson()) {
+            return response()->json($url);
+        }
+
+        return view('urls.show', ['url' => $url]);
     }
 
     public function index()

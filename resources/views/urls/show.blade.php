@@ -10,6 +10,22 @@
             <div>
                 <img src="{{ url('img/loading.gif') }}" alt="loading indicator" style="margin-left: -50px"/>
             </div>
+            <script>
+				function checkState(retryCount) {
+					fetch('{{ route('urls.show', ['id' => $url->id]) }}', {headers: {'accept': 'application/json'}})
+						.then(function (response) {
+							return response.json()
+						}).then(function (url) {
+                            if (!['{{ \App\Url::WAITING }}', '{{ \App\Url::PROCESSING }}'].includes(url.state)) {
+                                window.location.reload();
+                            } else if (retryCount > 0) {
+                                setTimeout(() => checkState(retryCount- 1), 600);
+                            }
+					});
+				}
+
+				checkState(100);
+            </script>
             @break
         @case (\App\Url::FAILED)
             <span class="error">Failed.</span>

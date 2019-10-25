@@ -23,6 +23,13 @@ class Url extends Model
         'body',
     ];
 
+    /**
+     * The attributes that should be hidden for arrays and JSON.
+     *
+     * @var array
+     */
+    protected $hidden = ['body'];
+
     public static function ensureHttp(string $address)
     {
         if (stripos($address, 'http://') !== 0 && strpos($address, 'https://') !== 0) {

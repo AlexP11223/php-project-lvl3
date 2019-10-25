@@ -23,7 +23,7 @@ class UrlsTest extends TestCase
         if ($resultUrl) {
             $this->expectsJobs(AnalysisJob::class);
         }
-        
+
         $this->post(route('urls.store'), ['url' => $input]);
 
         if ($resultUrl) {
@@ -34,6 +34,11 @@ class UrlsTest extends TestCase
 
             $this->get(route('urls.show', ['id' => 1]));
             $this->assertResponseOk();
+
+            $this->json('GET', route('urls.show', ['id' => 1]))
+                ->seeJsonContains([
+                    'state' => Url::WAITING
+                ]);
         } else {
             $this->notSeeInDatabase('urls', ['address' => $resultUrl]);
 
