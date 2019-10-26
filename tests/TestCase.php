@@ -31,4 +31,9 @@ abstract class TestCase extends \Laravel\Lumen\Testing\TestCase
     {
         return require __DIR__ . '/../bootstrap/app.php';
     }
+
+    protected static function getFixtureFilePath($relativeFilePath)
+    {
+        return dirname(__FILE__) . '/fixtures/' . $relativeFilePath;
+    }
 }

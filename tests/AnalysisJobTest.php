@@ -17,25 +17,12 @@ class AnalysisJobTest extends TestCase
     {
         parent::setUp();
 
-        $this->url = factory(Url::class, 1)->create()[0];
+        $this->url = factory(Url::class)->create();
     }
 
     public function testNormal()
     {
-        $html = '<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="hello world description">
-<meta name="keywords" content="hello,world">
-<title></title>
-</head>
-<body>
-<h1>Hello world</h1>
-<p>Content</p>
-</body>';
+        $html = file_get_contents(self::getFixtureFilePath('basic.html'));
         $this->guzzler->queueResponse(new Response(200, ['content-length' => strlen($html)], $html));
         (new AnalysisJob($this->url))->handle();
 
