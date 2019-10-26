@@ -28,8 +28,8 @@ class AnalysisJob extends Job
         try {
             $this->url->setState(Url::PROCESSING);
 
-            $analyzer = new Analyzer($this->url->address);
-            $results = $analyzer->getResults();
+            $analyzer = new Analyzer();
+            $results = $analyzer->requestData($this->url->address);
             $this->url->update($results);
 
             $this->url->setState(Url::SUCCEEDED);

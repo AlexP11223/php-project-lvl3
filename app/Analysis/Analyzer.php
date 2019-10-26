@@ -7,25 +7,19 @@ use GuzzleHttp\Client;
 class Analyzer
 {
     /**
-     * @var string
-     */
-    private $url;
-
-    /**
      * @var Client
      */
     private $httpClient;
 
-    public function __construct(string $url)
+    public function __construct()
     {
-        $this->url = $url;
         $this->httpClient = app(Client::class);
     }
 
-    public function getResults()
+    public function requestData(string $url)
     {
         $response = $this->httpClient->get(
-            $this->url,
+            $url,
             [
                 'timeout' => 20,
                 'connect_timeout' => 15,
