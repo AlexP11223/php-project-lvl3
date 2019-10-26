@@ -85,4 +85,16 @@ class AnalysisJobTest extends TestCase
             [500],
         ];
     }
+
+    public function testFailedRequest()
+    {
+        // will throw because no queued response
+        (new AnalysisJob($this->url))->handle();
+
+        $this->url->refresh();
+        self::assertEquals(Url::FAILED, $this->url->state);
+        self::assertNull($this->url->statusCode);
+        self::assertNull($this->url->body);
+        self::assertNull($this->url->contentLength);
+    }
 }
