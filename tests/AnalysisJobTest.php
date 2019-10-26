@@ -89,7 +89,9 @@ class AnalysisJobTest extends TestCase
     public function testFailedRequest()
     {
         // will throw because no queued response
-        (new AnalysisJob($this->url))->handle();
+        $analyzer = new AnalysisJob($this->url);
+        $analyzer->outputErrorsToConsole = false;
+        $analyzer->handle();
 
         $this->url->refresh();
         self::assertEquals(Url::FAILED, $this->url->state);

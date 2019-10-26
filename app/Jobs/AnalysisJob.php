@@ -13,9 +13,15 @@ class AnalysisJob extends Job
      */
     private $url;
 
+    /**
+     * @var bool
+     */
+    public $outputErrorsToConsole;
+
     public function __construct(Url $url)
     {
         $this->url = $url;
+        $this->outputErrorsToConsole = env('APP_DEBUG');
     }
 
     /**
@@ -38,7 +44,7 @@ class AnalysisJob extends Job
                     $pageInfo = $analyzer->extractPageInfo($response['body']);
                     $this->url->update($pageInfo);
                 } catch (\Throwable $ex) {
-                    self::logError($ex);
+                    $this->logError($ex);
                 }
             }
 
@@ -46,14 +52,14 @@ class AnalysisJob extends Job
         } catch (\Throwable $ex) {
             $this->url->setState(Url::FAILED);
 
-            self::logError($ex);
+            $this->logError($ex);
         }
     }
 
     private function logError($ex)
     {
         Log::error($ex);
-        if (env('APP_DEBUG')) {
+        if ($this->outputErrorsToConsole) {
             var_dump($ex);
         }
     }
