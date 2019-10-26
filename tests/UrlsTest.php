@@ -26,20 +26,8 @@ class UrlsTest extends TestCase
                 'address' => $resultUrl,
                 'state' => Url::WAITING
             ]);
-
-            $this->get(route('urls.show', ['id' => 1]));
-            $this->assertResponseOk();
-
-            $this->json('GET', route('urls.show', ['id' => 1]))
-                ->seeJsonContains([
-                    'state' => Url::WAITING
-                ]);
         } else {
             $this->notSeeInDatabase('urls', ['address' => $resultUrl]);
-
-            $this->withExceptionHandling();
-            $this->get(route('urls.show', ['id' => 1]));
-            $this->assertResponseStatus(404);
         }
     }
 
@@ -67,5 +55,39 @@ class UrlsTest extends TestCase
 
         $this->get(route('urls.index'));
         $this->assertResponseOk();
+    }
+
+    /**
+     * @dataProvider urlFactoryTypeProvider
+     */
+    public function testShow($factoryType)
+    {
+        $url = factory(Url::class, $factoryType)->create();
+
+        $this->get(route('urls.show', ['id' => $url->id]));
+        $this->assertResponseOk();
+
+        $this->json('GET', route('urls.show', ['id' => $url->id]))
+            ->seeJsonContains([
+                'state' => $url->state
+            ]);
+    }
+
+    public function urlFactoryTypeProvider()
+    {
+        return [
+            ['waiting'],
+            ['processing'],
+            ['succeeded'],
+            ['failed'],
+        ];
+    }
+
+    public function testShowNotExisting()
+    {
+        $this->withExceptionHandling();
+
+        $this->get(route('urls.show', ['id' => 42]));
+        $this->assertResponseStatus(404);
     }
 }
