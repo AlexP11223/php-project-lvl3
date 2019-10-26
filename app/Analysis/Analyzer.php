@@ -2,6 +2,7 @@
 
 namespace App\Analysis;
 
+use DiDom\Document;
 use GuzzleHttp\Client;
 
 class Analyzer
@@ -34,6 +35,21 @@ class Analyzer
             'statusCode' => $response->getStatusCode(),
             'body' => $body ?: null,
             'contentLength' => $contentLengths ? $contentLengths[0] : null,
+        ];
+    }
+
+    public function extractPageInfo(string $html)
+    {
+        $doc = new Document($html);
+
+        $metaDescription = $doc->find('meta[name="description"]');
+        $metaKeywords = $doc->find('meta[name="keywords"]');
+        $h1 = $doc->find('h1');
+
+        return [
+            'description' => $metaDescription ? $metaDescription[0]->attr('content') : null,
+            'keywords' => $metaKeywords ? $metaKeywords[0]->attr('content') : null,
+            'heading' => $h1 ? $h1[0]->text() : null,
         ];
     }
 }

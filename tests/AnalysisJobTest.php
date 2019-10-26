@@ -22,6 +22,35 @@ class AnalysisJobTest extends TestCase
 
     public function testNormal()
     {
+        $html = '<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="hello world description">
+<meta name="keywords" content="hello,world">
+<title></title>
+</head>
+<body>
+<h1>Hello world</h1>
+<p>Content</p>
+</body>';
+        $this->guzzler->queueResponse(new Response(200, ['content-length' => strlen($html)], $html));
+        (new AnalysisJob($this->url))->handle();
+
+        $this->url->refresh();
+        self::assertEquals(Url::SUCCEEDED, $this->url->state);
+        self::assertEquals(200, $this->url->statusCode);
+        self::assertEquals($html, $this->url->body);
+        self::assertEquals(strlen($html), $this->url->contentLength);
+        self::assertEquals('hello world description', $this->url->description);
+        self::assertEquals('hello,world', $this->url->keywords);
+        self::assertEquals('Hello world', $this->url->heading);
+    }
+
+    public function testNoHtml()
+    {
         $this->guzzler->queueResponse(new Response(200, ['content-length' => 6], 'hello!'));
         (new AnalysisJob($this->url))->handle();
 
@@ -30,6 +59,9 @@ class AnalysisJobTest extends TestCase
         self::assertEquals(200, $this->url->statusCode);
         self::assertEquals('hello!', $this->url->body);
         self::assertEquals(6, $this->url->contentLength);
+        self::assertNull($this->url->description);
+        self::assertNull($this->url->keywords);
+        self::assertNull($this->url->heading);
     }
 
     public function testMissingContentLength()

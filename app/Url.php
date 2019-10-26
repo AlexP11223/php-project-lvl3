@@ -22,6 +22,9 @@ class Url extends Model
         'statusCode',
         'contentLength',
         'body',
+        'description',
+        'keywords',
+        'heading',
     ];
 
     /**

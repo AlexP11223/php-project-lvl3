@@ -29,17 +29,32 @@ class AnalysisJob extends Job
             $this->url->setState(Url::PROCESSING);
 
             $analyzer = new Analyzer();
-            $results = $analyzer->requestData($this->url->address);
-            $this->url->update($results);
+
+            $response = $analyzer->requestData($this->url->address);
+            $this->url->update($response);
+
+            if ($response['body']) {
+                try {
+                    $pageInfo = $analyzer->extractPageInfo($response['body']);
+                    $this->url->update($pageInfo);
+                } catch (\Throwable $ex) {
+                    self::logError($ex);
+                }
+            }
 
             $this->url->setState(Url::SUCCEEDED);
         } catch (\Throwable $ex) {
             $this->url->setState(Url::FAILED);
 
-            Log::error($ex);
-            if (env('APP_DEBUG')) {
-                var_dump($ex);
-            }
+            self::logError($ex);
+        }
+    }
+
+    private function logError($ex)
+    {
+        Log::error($ex);
+        if (env('APP_DEBUG')) {
+            var_dump($ex);
         }
     }
 }

@@ -8,6 +8,7 @@
         "php": "^7.3",
         "flipbox/lumen-generator": "^6.0",
         "guzzlehttp/guzzle": "~6.0",
+        "imangazaliev/didom": "^1.14",
         "laravel/lumen-framework": "^6.0"
     },
     "require-dev": {

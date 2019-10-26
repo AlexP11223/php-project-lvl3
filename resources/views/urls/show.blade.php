@@ -43,6 +43,24 @@
                         <td>{{ $url->contentLength }}</td>
                     </tr>
                 @endif
+                @if ($url->heading)
+                    <tr>
+                        <th scope="row">Heading</th>
+                        <td>{{ $url->heading }}</td>
+                    </tr>
+                @endif
+                @if ($url->description)
+                    <tr>
+                        <th scope="row">Description</th>
+                        <td>{{ $url->description }}</td>
+                    </tr>
+                @endif
+                @if ($url->keywords)
+                    <tr>
+                        <th scope="row">Keywords</th>
+                        <td>{{ $url->keywords }}</td>
+                    </tr>
+                @endif
             </table>
             @break
     @endswitch
