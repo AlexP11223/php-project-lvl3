@@ -4,20 +4,15 @@ namespace Tests;
 
 use App\Jobs\AnalysisJob;
 use App\Url;
-use BlastCloud\Guzzler\UsesGuzzler;
-use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Response;
 
 class UrlsTest extends TestCase
 {
-    use UsesGuzzler;
-
     /**
      * @dataProvider urlProvider
      */
     public function testStore($input, $resultUrl)
     {
-        $this->app->instance(Client::class, $this->guzzler->getClient());
         $this->guzzler->queueResponse(new Response(200, ['content-length' => 6], 'hello!'));
 
         if ($resultUrl) {

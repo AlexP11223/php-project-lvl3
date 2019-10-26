@@ -26,10 +26,12 @@ class Analyzer
             ]
         );
 
+        $contentLengths = $response->getHeader('content-length');
+
         return [
             'statusCode' => $response->getStatusCode(),
             'body' => $response->getBody()->getContents(),
-            'contentLength' => $response->getHeader('content-length')[0]
+            'contentLength' => $contentLengths ? $contentLengths[0] : null,
         ];
     }
 }

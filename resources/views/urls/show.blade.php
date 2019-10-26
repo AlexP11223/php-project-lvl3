@@ -37,10 +37,12 @@
                     <th scope="row">Status</th>
                     <td>{{ $url->statusCode }} {{ $url->getStatusCodeDescription() }}</td>
                 </tr>
-                <tr>
-                    <th scope="row">Content-Length</th>
-                    <td>{{ $url->contentLength }}</td>
-                </tr>
+                @if ($url->contentLength)
+                    <tr>
+                        <th scope="row">Content-Length</th>
+                        <td>{{ $url->contentLength }}</td>
+                    </tr>
+                @endif
             </table>
             @break
     @endswitch

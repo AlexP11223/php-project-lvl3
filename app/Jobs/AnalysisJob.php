@@ -37,6 +37,9 @@ class AnalysisJob extends Job
             $this->url->setState(Url::FAILED);
 
             Log::error($ex);
+            if (env('APP_DEBUG')) {
+                var_dump($ex);
+            }
         }
     }
 }

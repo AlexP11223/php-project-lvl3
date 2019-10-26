@@ -14,5 +14,6 @@
 $factory->define(App\Url::class, function (Faker\Generator $faker) {
     return [
         'address' => $faker->url,
+        'state' => \App\Url::WAITING,
     ];
 });
