@@ -2,6 +2,7 @@
 
 namespace App;
 
+use GuzzleHttp\Psr7\Response;
 use Illuminate\Database\Eloquent\Model;
 
 class Url extends Model
@@ -47,5 +48,10 @@ class Url extends Model
     {
         $this->state = $state;
         $this->save();
+    }
+
+    public function getStatusCodeDescription()
+    {
+        return (new Response($this->statusCode))->getReasonPhrase();
     }
 }

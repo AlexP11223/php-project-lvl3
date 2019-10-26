@@ -35,7 +35,7 @@
             <table class="table url-info-table">
                 <tr>
                     <th scope="row">Status</th>
-                    <td>{{ $url->statusCode }}</td>
+                    <td>{{ $url->statusCode }} {{ $url->getStatusCodeDescription() }}</td>
                 </tr>
                 <tr>
                     <th scope="row">Content-Length</th>
