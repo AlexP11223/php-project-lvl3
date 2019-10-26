@@ -4,7 +4,7 @@
 
 # Web Page Analyzer
 
-https://alexp11223-web-page-analyzer.herokuapp.com
+http://alexp11223-web-page-analyzer.herokuapp.com
 
 A simple website created using Lumen framework that extracts some information about the specified web page. The requests are processed using a job queue asynchronously.
 
