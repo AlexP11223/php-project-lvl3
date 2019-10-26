@@ -13,6 +13,11 @@
                     @case (\App\Url::FAILED)
                         <i class="fas fa-exclamation" style="color: red"></i>
                         @break
+                    @case (\App\Url::SUCCEEDED)
+                        @if ($url->statusCode >= 400)
+                            <i class="fas fa-exclamation" style="color: orange"></i>
+                        @endif
+                        @break
                 @endswitch
             </li>
         @endforeach

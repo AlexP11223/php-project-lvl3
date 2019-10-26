@@ -35,7 +35,7 @@
             <table class="table url-info-table">
                 <tr>
                     <th scope="row">Status</th>
-                    <td>{{ $url->statusCode }} {{ $url->getStatusCodeDescription() }}</td>
+                    <td class="@if ($url->statusCode >= 400) http-error @endif">{{ $url->statusCode }} {{ $url->getStatusCodeDescription() }}</td>
                 </tr>
                 @if ($url->contentLength)
                     <tr>
