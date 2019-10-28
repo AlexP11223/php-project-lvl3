@@ -9,3 +9,9 @@ http://alexp11223-web-page-analyzer.herokuapp.com
 A simple website created using Lumen framework that extracts some information about the specified web page. The requests are processed using a job queue asynchronously.
 
 ![](https://i.imgur.com/V0wBwyR.gif)
+
+## Heroku deployment
+
+1. Add postgres and php buildpack.
+2. Add `APP_KEY` (`php artisan key:generate --show`).
+3. Enable the worker for queue processing.
