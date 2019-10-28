@@ -1,9 +1,8 @@
 <?php
 
-namespace Tests;
+namespace Tests\Feature\Http;
 
-use Laravel\Lumen\Testing\DatabaseMigrations;
-use Laravel\Lumen\Testing\DatabaseTransactions;
+use Tests\TestCase;
 
 class HomeTest extends TestCase
 {

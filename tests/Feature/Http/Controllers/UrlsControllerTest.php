@@ -1,10 +1,11 @@
 <?php
 
-namespace Tests;
+namespace Tests\Feature\Http\Controllers;
 
 use App\Jobs\AnalysisJob;
 use App\Url;
 use GuzzleHttp\Psr7\Response;
+use Tests\TestCase;
 
 class UrlsTest extends TestCase
 {
