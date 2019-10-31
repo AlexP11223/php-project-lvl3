@@ -47,12 +47,6 @@ class Url extends Model
         return self::ensureHttp($this->address);
     }
 
-    public function setState($state)
-    {
-        $this->state = $state;
-        $this->save();
-    }
-
     public function getStatusCodeDescription()
     {
         return (new Response($this->statusCode))->getReasonPhrase();

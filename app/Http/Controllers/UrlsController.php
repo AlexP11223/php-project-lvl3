@@ -49,8 +49,9 @@ class UrlsController extends Controller
             return redirect()->route('urls.create');
         }
 
-        $url = Url::create(['address' => $request->get('url')]);
-        $url->setState(Url::WAITING);
+        $url = Url::make(['address' => $request->get('url')]);
+        $url->state = Url::WAITING;
+        $url->save();
 
         dispatch(new AnalysisJob($url));
 

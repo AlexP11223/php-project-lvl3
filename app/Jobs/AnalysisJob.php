@@ -32,7 +32,8 @@ class AnalysisJob extends Job
     public function handle()
     {
         try {
-            $this->url->setState(Url::PROCESSING);
+            $this->url->state = Url::PROCESSING;
+            $this->url->save();
 
             $analyzer = new Analyzer();
 
@@ -48,9 +49,11 @@ class AnalysisJob extends Job
                 }
             }
 
-            $this->url->setState(Url::SUCCEEDED);
+            $this->url->state = Url::SUCCEEDED;
+            $this->url->save();
         } catch (\Throwable $ex) {
-            $this->url->setState(Url::FAILED);
+            $this->url->state = Url::FAILED;
+            $this->url->save();
 
             $this->logError($ex);
         }
