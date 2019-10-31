@@ -15,11 +15,7 @@ class UrlsController extends Controller
 
     public function show($id, Request $request)
     {
-        $url = Url::find($id);
-
-        if (!$url) {
-            abort(404);
-        }
+        $url = Url::findOrFail($id);
 
         if ($request->expectsJson()) {
             return response()->json($url);
