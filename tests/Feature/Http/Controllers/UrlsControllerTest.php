@@ -16,20 +16,14 @@ class UrlsTest extends TestCase
     {
         $this->guzzler->queueResponse(new Response(200, ['content-length' => 6], 'hello!'));
 
-        if ($resultUrl) {
-            $this->expectsJobs(AnalysisJob::class);
-        }
+        $this->expectsJobs(AnalysisJob::class);
 
         $this->post(route('urls.store'), ['url' => $input]);
 
-        if ($resultUrl) {
-            $this->seeInDatabase('urls', [
-                'address' => $resultUrl,
-                'state' => Url::WAITING
-            ]);
-        } else {
-            $this->notSeeInDatabase('urls', ['address' => $resultUrl]);
-        }
+        $this->seeInDatabase('urls', [
+            'address' => $resultUrl,
+            'state' => Url::WAITING
+        ]);
     }
 
     public function urlProvider()
@@ -44,9 +38,25 @@ class UrlsTest extends TestCase
             ['xn--90adear.xn--p1ai', 'xn--90adear.xn--p1ai'],
             ['8.8.8.8:8080', '8.8.8.8:8080'],
             ['        http://google.com ', 'http://google.com'],
-            ['', null],
-            ['g', null],
-            ['https://', null],
+        ];
+    }
+
+    /**
+     * @dataProvider badUrlProvider
+     */
+    public function testStoreBadUrl($input)
+    {
+        $this->post(route('urls.store'), ['url' => $input]);
+
+        $this->notSeeInDatabase('urls', ['address' => $input]);
+    }
+
+    public function badUrlProvider()
+    {
+        return [
+            [''],
+            ['g'],
+            ['https://'],
         ];
     }
 
