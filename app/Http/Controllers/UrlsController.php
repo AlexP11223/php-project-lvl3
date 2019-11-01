@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Jobs\AnalysisJob;
 use App\Url;
+use App\Utils\Http;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -40,7 +41,7 @@ class UrlsController extends Controller
     {
         $input = $request->all();
         if (isset($input['url'])) {
-            $input['url'] = Url::ensureHttp($input['url']); // for url validation rule
+            $input['url'] = Http::ensureHttp($input['url']); // for url validation rule
         }
         $validator = Validator::make($input, [
             'url' => "required|max:255|url"

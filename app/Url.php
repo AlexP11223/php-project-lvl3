@@ -33,22 +33,4 @@ class Url extends Model
      * @var array
      */
     protected $hidden = ['body'];
-
-    public static function ensureHttp(string $address)
-    {
-        if (stripos($address, 'http://') !== 0 && strpos($address, 'https://') !== 0) {
-            return "http://$address";
-        }
-        return $address;
-    }
-
-    public function normalizedAddress()
-    {
-        return self::ensureHttp($this->address);
-    }
-
-    public function getStatusCodeDescription()
-    {
-        return (new Response($this->statusCode))->getReasonPhrase();
-    }
 }

@@ -1,7 +1,7 @@
 @extends('layouts.page')
 
 @section('content')
-    <h3><a href="{{ $url->normalizedAddress() }}" rel="nofollow" target="_blank">{{ $url->address }}</a> ({{ $url->created_at }})</h3>
+    <h3><a href="{{ \App\Utils\Http::ensureHttp($url->address) }}" rel="nofollow" target="_blank">{{ $url->address }}</a> ({{ $url->created_at }})</h3>
 
     @switch ($url->state)
         @case (\App\Url::WAITING)
@@ -35,7 +35,7 @@
             <table class="table url-info-table">
                 <tr>
                     <th scope="row">Status</th>
-                    <td class="@if ($url->statusCode >= 400) http-error @endif">{{ $url->statusCode }} {{ $url->getStatusCodeDescription() }}</td>
+                    <td class="@if ($url->statusCode >= 400) http-error @endif">{{ $url->statusCode }} {{ \App\Utils\Http::getStatusCodeDescription($url->statusCode) }}</td>
                 </tr>
                 @if ($url->contentLength)
                     <tr>
