@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\Http\Controllers;
 
-use App\Jobs\AnalysisJob;
 use App\Url;
 use GuzzleHttp\Psr7\Response;
 use Tests\TestCase;
@@ -15,8 +14,6 @@ class UrlsTest extends TestCase
     public function testStore($input, $resultUrl)
     {
         $this->guzzler->queueResponse(new Response(200, ['content-length' => 6], 'hello!'));
-
-        $this->expectsJobs(AnalysisJob::class);
 
         $this->post(route('urls.store'), ['url' => $input]);
 
