@@ -17,7 +17,7 @@ A simple website created using Lumen framework that extracts some information ab
 3. Run `make queue-daemon` or `make empty-queue` to process the job queue.
 4. Run `make lint test` to run linter and tests.
 
-See [Makefile](/Makefile) for other useful commands.
+See [Makefile](/Makefile) for other useful commands. Check out https://makefile.site if you are interested in this approach.
 
 ## Heroku deployment
 
